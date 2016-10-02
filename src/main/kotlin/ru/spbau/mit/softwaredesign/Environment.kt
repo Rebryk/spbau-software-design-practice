@@ -10,4 +10,6 @@ package ru.spbau.mit.softwaredesign
 interface Environment {
     fun setVariable(name: String, value: String)
     fun getVariable(name: String): String
+    fun setCurrentDirectory(directory: String)
+    fun getCurrentDirectory(): String
 }

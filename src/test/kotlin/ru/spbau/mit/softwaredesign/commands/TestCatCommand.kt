@@ -1,6 +1,7 @@
 package ru.spbau.mit.softwaredesign.commands
 
 import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.whenever
 import org.apache.commons.io.IOUtils
 import org.junit.Rule
 import org.junit.Test
@@ -37,7 +38,10 @@ class TestCatCommand {
         testFile1.outputStream().write(testStr1.toByteArray())
         testFile2.outputStream().write(testStr2.toByteArray())
 
-        val out = cat.execute(listOf(testFile1.path, testFile2.path), mock<Environment>(),
+        val env = mock<Environment>()
+        whenever(env.getCurrentDirectory()).thenReturn("")
+
+        val out = cat.execute(listOf(testFile1.path, testFile2.path), env,
                 "123".byteInputStream())
         val lines = IOUtils.readLines(out, "UTF-8")
         assertEquals("$testStr1$testStr2", lines.joinToString("\n"))

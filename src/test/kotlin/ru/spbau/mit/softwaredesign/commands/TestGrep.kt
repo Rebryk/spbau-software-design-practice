@@ -1,6 +1,7 @@
 package ru.spbau.mit.softwaredesign.commands
 
 import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.whenever
 import org.apache.commons.io.IOUtils
 import org.junit.Rule
 import org.junit.Test
@@ -34,7 +35,10 @@ class TestGrep {
         val file2 = tmpFolder.newFile("file2")
         file2.writeText("123 123\n321\nnot123")
 
-        val out = grep.execute(listOf("^123", file1.path, file2.path), mock<Environment>(),
+        val env = mock<Environment>()
+        whenever(env.getCurrentDirectory()).thenReturn("")
+
+        val out = grep.execute(listOf("^123", file1.path, file2.path), env,
                 "123\n456 123\n456".byteInputStream())
         assertEquals(listOf("123", "123 123"), IOUtils.readLines(out, "UTF-8"))
     }
@@ -48,7 +52,10 @@ class TestGrep {
         val file2 = tmpFolder.newFile("file2")
         file2.writeText("123 123\n321\nnot123\nanother text")
 
-        val out = grep.execute(listOf("-A", "1", "123$", file1.path, file2.path), mock<Environment>(),
+        val env = mock<Environment>()
+        whenever(env.getCurrentDirectory()).thenReturn("")
+
+        val out = grep.execute(listOf("-A", "1", "123$", file1.path, file2.path), env,
                 "123\n456 123\n456".byteInputStream())
         assertEquals(listOf("123", "123 456", "123 123", "321", "not123", "another text"), IOUtils.readLines(out, "UTF-8"))
     }

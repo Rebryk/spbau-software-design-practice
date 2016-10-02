@@ -21,7 +21,7 @@ class CatCommand: Command {
         }
         var content = ""
         for (fileName in args) {
-            val path = Paths.get(fileName)
+            val path = Paths.get(env.getCurrentDirectory()).resolve(fileName);
             if (!Files.exists(path)) {
                 System.err.println("cat: no such file: $fileName")
                 continue

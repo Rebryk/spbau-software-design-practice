@@ -1,6 +1,7 @@
 package ru.spbau.mit.softwaredesign.commands
 
 import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.whenever
 import org.apache.commons.io.IOUtils
 import org.junit.Rule
 import org.junit.Test
@@ -38,7 +39,10 @@ class TestWcCommand {
         testFile1.outputStream().write(testStr1.toByteArray())
         testFile2.outputStream().write(testStr2.toByteArray())
 
-        val out = wc.execute(listOf(testFile1.path, testFile2.path), mock<Environment>(), "123".byteInputStream())
+        val env = mock<Environment>()
+        whenever(env.getCurrentDirectory()).thenReturn("")
+
+        val out = wc.execute(listOf(testFile1.path, testFile2.path), env, "123".byteInputStream())
         val lines = IOUtils.readLines(out, "UTF-8")
         assertEquals(1, lines.size)
         assertEquals("3 5 ${testStr1.length + testStr2.length}", lines[0])

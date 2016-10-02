@@ -54,7 +54,7 @@ class GrepCommand: Command {
 
         if (commandLine.args.size > 1) {
             for (fileName in commandLine.args.drop(1)) {
-                val path = Paths.get(fileName)
+                val path = Paths.get(env.getCurrentDirectory()).resolve(fileName);
                 if (!Files.exists(path)) {
                     System.err.println("grep: no such file: $fileName")
                     continue

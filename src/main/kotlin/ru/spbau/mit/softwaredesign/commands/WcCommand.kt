@@ -22,7 +22,7 @@ class WcCommand: Command {
             wordCount = getCount(stdin)
         } else {
             for (fileName in args) {
-                val newCount = getCount(Paths.get(fileName).toFile().inputStream())
+                val newCount = getCount(Paths.get(env.getCurrentDirectory()).resolve(fileName).toFile().inputStream())
                 wordCount.lineCount += newCount.lineCount
                 wordCount.wordCount += newCount.wordCount
                 wordCount.byteCount += newCount.byteCount

@@ -15,6 +15,8 @@ fun main(args: Array<String>) {
     shell.registerCommand("wc", WcCommand())
     shell.registerCommand("cat", CatCommand())
     shell.registerCommand("grep", GrepCommand())
+    shell.registerCommand("ls", LsCommand())
+    shell.registerCommand("cd", CdCommand())
 
     while (true) {
         print("$")
