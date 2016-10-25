@@ -13,7 +13,6 @@ import java.nio.file.Paths
  */
 class PwdCommand: Command {
     override fun execute(args: List<String>, env: Environment, stdin: InputStream): InputStream {
-        return (Paths.get(".").toAbsolutePath().toString() + "\n").byteInputStream()
+        return (Paths.get(env.getCurrentDirectory()).toAbsolutePath().toString() + "\n").byteInputStream()
     }
-
 }

@@ -8,7 +8,7 @@ import java.nio.file.Paths
 
 class EnvironmentImpl: Environment {
     private val variables: MutableMap<String, String> = hashMapOf()
-    private var currentDirectory: String = Paths.get(".").toAbsolutePath().toString();
+    private var currentDirectory: String = Paths.get("").toAbsolutePath().toString();
 
     init {
         System.getenv().forEach { variables[it.key] = it.value }
